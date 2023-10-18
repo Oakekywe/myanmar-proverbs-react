@@ -126,12 +126,17 @@ const Home = () => {
           </h5>
 
           <ul className="text-m">
-            {filteredProverbs &&
+            {filteredProverbs == "" ? (
+              <h2 className="text-m py-4 pl-2 text-gray-400 ">
+                သက်ဆိုင်ရာ စကားပုံ မရှိပါ။
+              </h2>
+            ) : (
               filteredProverbs.map((fp) => (
                 <li className="text-gray-400 my-3" key={fp.ProverbId}>
                   <Link> {fp.ProverbName}</Link>
                 </li>
-              ))}
+              ))
+            )}
           </ul>
         </div>
       </div>
