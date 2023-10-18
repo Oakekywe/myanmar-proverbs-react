@@ -69,14 +69,16 @@ const Home = () => {
                               <td
                                 className="px-6 py-3"
                                 key={title[index + i].TitleId}
-                                onClick={() =>
-                                  handleCellClick(
-                                    title[index + i].TitleId,
-                                    title[index + i].TitleName
-                                  )
-                                }
                               >
-                                <button className=" hover:border-b-2 hover:border-gray-200 hover:text-gray-200">
+                                <button
+                                  onClick={() =>
+                                    handleCellClick(
+                                      title[index + i].TitleId,
+                                      title[index + i].TitleName
+                                    )
+                                  }
+                                  className=" hover:border-b-2 hover:border-gray-200 hover:text-gray-200"
+                                >
                                   {title[index + i].TitleName}
                                 </button>
                               </td>
