@@ -44,8 +44,8 @@ const Home = () => {
     <div>Loading...</div>
   ) : (
     <div className="bg-gray-800 min-h-screen py-6">
-      <div className="flex justify-around">
-        <div className="max-w-m p-6 bg-gray-700 border border-gray-700 rounded-lg shadow ">
+      <div className="md:flex justify-around">
+        <div className="max-w-m m-2 p-6 bg-gray-700 border border-gray-700 rounded-lg shadow h-full">
           <h5 className="mb-2 text-xl font-bold tracking-tight text-white">
             မိမိကြည့်ရှုလိုသော အက္ခရာကိုနှိပ်၍ ရှာဖွေဖတ်ရှုနိုင်ပါသည်
           </h5>
@@ -91,7 +91,7 @@ const Home = () => {
         </div>
 
         <div
-          className={`max-w-sm py-2 px-5 bg-gray-700 border border-gray-700 rounded-lg shadow ${
+          className={`max-w-sm py-2 px-5 md:m-2 md:mx-0 m-auto bg-gray-700 border border-gray-700 rounded-lg shadow ${
             selectedTitleId || filteredProverbs.length > 0 ? "block" : "hidden"
           }`}
         >
@@ -126,7 +126,7 @@ const Home = () => {
           <ul className="text-m">
             {filteredProverbs &&
               filteredProverbs.map((fp) => (
-                <li className="text-gray-400 my-2" key={fp.ProverbId}>
+                <li className="text-gray-400 my-3" key={fp.ProverbId}>
                   <Link> {fp.ProverbName}</Link>
                 </li>
               ))}
