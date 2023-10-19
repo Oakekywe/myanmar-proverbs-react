@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const Home = () => {
   const [proverbs, setProverbs] = useState([]);
@@ -41,7 +42,7 @@ const Home = () => {
   }, []);
 
   return isLoading ? (
-    <div>Loading...</div>
+    <Loading />
   ) : (
     <div className="bg-gray-800 min-h-screen py-6">
       <div className="md:flex justify-around">
@@ -132,10 +133,14 @@ const Home = () => {
               </h2>
             ) : (
               filteredProverbs.map((fp) => (
-                <li className="text-gray-400 my-3 hover:text-gray-200" key={fp.ProverbId}>
-                  <Link> {fp.ProverbName}</Link>
+                <li
+                  className="text-gray-400 my-3 hover:text-gray-200"
+                  key={fp.ProverbId}
+                >
+                  <Link to={`/detail/${fp.ProverbId}/${fp.TitleId}`}>
+                    {fp.ProverbName}
+                  </Link>
                 </li>
-                
               ))
             )}
           </ul>
