@@ -1,40 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "./Loading";
+import useFetchData from "../../utls/Fetching";
 
 const ProverbDetail = () => {
   const { titleId, pId } = useParams();
-  const [proverbs, setProverbs] = useState([]);
   const [proverb, setProverb] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { data, error, isLoading } = useFetchData("/db.json");
 
   useEffect(() => {
-    const fetching = async () => {
-      try {
-        const data = await (await fetch("/db.json")).json();
-        setProverbs(data.Proverbs);
-      } catch (error) {
-        setError(error);
-      }
-      setIsLoading(false);
-    };
-    fetching();
-  }, []);
-
-  useEffect(() => {
-    const filteredDetail = proverbs.filter(
+    const filteredDetail = data?.Proverbs.filter(
       (proverb) => proverb.TitleId == titleId && proverb.ProverbId == pId
     );
-    if (filteredDetail.length > 0) {
+
+    if (filteredDetail?.length > 0) {
       setProverb(filteredDetail[0]);
     } else {
       setProverb(null);
     }
-  }, [proverbs, titleId, pId]);
+  }, [data?.Proverbs, titleId, pId]);
 
   return isLoading ? (
-    <Loading />
+    <Loading isLoading={isLoading} />
   ) : (
     <div className="bg-gray-800 min-h-screen py-10">
       <div className="md:flex justify-center">

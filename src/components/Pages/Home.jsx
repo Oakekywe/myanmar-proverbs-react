@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import useFetchData from "../../utls/Fetching";
 
 const Home = () => {
-  const [proverbs, setProverbs] = useState([]);
   const [filteredProverbs, setFilteredProverbs] = useState([]);
-  const [title, setTitle] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
   const [selectedTitleId, setSelectedTitleId] = useState(null);
   const [selectedTitleName, setSelectedTitleName] = useState("");
+
+  const apiUrl = "/db.json";
+  const { data, error, isLoading } = useFetchData(apiUrl);
 
   // handle click က,ခ
   const handleCellClick = (titleId, titleName) => {
@@ -19,30 +19,15 @@ const Home = () => {
 
   // filter selected id
   useEffect(() => {
-    const filterData = proverbs.filter(
+    const filterData = data?.Proverbs.filter(
       (proverb) => proverb.TitleId === selectedTitleId
     );
-    // console.log(filterData);
+
     setFilteredProverbs(filterData);
   }, [selectedTitleId]);
 
-  // fetch all title
-  useEffect(() => {
-    const fetching = async () => {
-      try {
-        const data = await (await fetch("/db.json")).json();
-        setProverbs(data.Proverbs);
-        setTitle(data.Title);
-      } catch (error) {
-        setError(error);
-      }
-      setIsLoading(false);
-    };
-    fetching();
-  }, []);
-
   return isLoading ? (
-    <Loading />
+    <Loading isLoading={isLoading} />
   ) : (
     <div className="bg-gray-800 min-h-screen py-6">
       <div className="md:flex justify-around">
@@ -57,8 +42,8 @@ const Home = () => {
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-m text-left text-gray-500 dark:text-gray-400">
               <tbody>
-                {title &&
-                  title.map((t, index) =>
+                {data?.Title &&
+                  data?.Title?.map((t, index) =>
                     index % 5 === 0 ? (
                       <tr
                         className="border-b bg-gray-800 border-gray-700"
@@ -66,21 +51,21 @@ const Home = () => {
                       >
                         {[...Array(5)].map(
                           (_, i) =>
-                            title[index + i] && (
+                            data?.Title[index + i] && (
                               <td
                                 className="md:px-6 lg:px-6 px-5 py-3"
-                                key={title[index + i].TitleId}
+                                key={data?.Title[index + i].TitleId}
                               >
                                 <button
                                   onClick={() =>
                                     handleCellClick(
-                                      title[index + i].TitleId,
-                                      title[index + i].TitleName
+                                      data?.Title[index + i].TitleId,
+                                      data?.Title[index + i].TitleName
                                     )
                                   }
                                   className=" hover:border-b-2 hover:border-gray-200 hover:text-gray-200"
                                 >
-                                  {title[index + i].TitleName}
+                                  {data?.Title[index + i].TitleName}
                                 </button>
                               </td>
                             )
@@ -95,7 +80,7 @@ const Home = () => {
 
         <div
           className={`max-w-sm py-2 px-5 md:m-2 md:mx-0 m-auto bg-gray-700 border border-gray-700 rounded-lg shadow ${
-            selectedTitleId || filteredProverbs.length > 0 ? "block" : "hidden"
+            selectedTitleId ? "block" : "hidden"
           }`}
         >
           <div className="flex justify-end">
@@ -132,7 +117,7 @@ const Home = () => {
                 သက်ဆိုင်ရာ စကားပုံ မရှိပါ။
               </h2>
             ) : (
-              filteredProverbs.map((fp) => (
+              filteredProverbs?.map((fp) => (
                 <li
                   className="text-gray-400 my-3 hover:text-gray-200"
                   key={fp.ProverbId}
