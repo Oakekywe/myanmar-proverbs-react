@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import useFetchData from "../../utls/Fetching";
+import ScrollToBot from "../../utls/ScrollBot";
 
 const Home = () => {
   const [filteredProverbs, setFilteredProverbs] = useState([]);
@@ -77,7 +78,7 @@ const Home = () => {
             </table>
           </div>
         </div>
-
+        {selectedTitleId && <ScrollToBot />}
         <div
           className={`max-w-sm py-2 px-5 md:m-2 md:mx-0 m-auto bg-gray-700 border border-gray-700 rounded-lg shadow ${
             selectedTitleId ? "block" : "hidden"
