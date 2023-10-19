@@ -67,7 +67,7 @@ const Home = () => {
                           (_, i) =>
                             title[index + i] && (
                               <td
-                                className="px-6 py-3"
+                                className="md:px-6 lg:px-6 px-5 py-3"
                                 key={title[index + i].TitleId}
                               >
                                 <button
@@ -125,16 +125,17 @@ const Home = () => {
             ({selectedTitleName && selectedTitleName}) နှင့်စသော စကားပုံများ
           </h5>
 
-          <ul className="text-m">
+          <ul className="text-m list-[roman] px-5">
             {filteredProverbs == "" ? (
               <h2 className="text-m py-4 pl-2 text-gray-400 ">
                 သက်ဆိုင်ရာ စကားပုံ မရှိပါ။
               </h2>
             ) : (
               filteredProverbs.map((fp) => (
-                <li className="text-gray-400 my-3" key={fp.ProverbId}>
+                <li className="text-gray-400 my-3 hover:text-gray-200" key={fp.ProverbId}>
                   <Link> {fp.ProverbName}</Link>
                 </li>
+                
               ))
             )}
           </ul>
